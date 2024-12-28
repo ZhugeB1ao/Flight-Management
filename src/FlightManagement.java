@@ -8,7 +8,7 @@ public class FlightManagement {
         menu.add("Display Flight Board");
         menu.add("Quit");
         int choice;
-        Flight f = new Flight();
+        Flights f = new Flights();
         do{
             System.out.println("\n FLIGHT MANAGER");
             choice = menu.getChoice();

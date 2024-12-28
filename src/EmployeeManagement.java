@@ -80,7 +80,7 @@ public class EmployeeManagement {
             String position = inputNotNullWithValidation("position");
             if(position == null) return;
 
-            int age = inputAgeWithValidation("age");
+            int age = inputIntegerWithValidation("age");
             if(age == -1) return;
 
             String username = inputUsernameWithValidation("username");
@@ -154,7 +154,7 @@ public class EmployeeManagement {
             String position = inputNotNullWithValidation("new position");
             if(position == null) return;
 
-            int age = inputAgeWithValidation("new age");
+            int age = inputIntegerWithValidation("new age");
             if(age == -1) return;
 
             String username = inputUsernameWithValidation("new username");
@@ -241,6 +241,12 @@ public class EmployeeManagement {
         return null;
     }
 
+    public boolean performAnotherAct(String content) {
+        System.out.print(content);
+        String choice = scanner.nextLine();
+        return choice.equalsIgnoreCase("yes");
+    }
+
     public boolean isValidId(String id) {
         if (id == null || id.trim().isEmpty()) {
             return false;
@@ -280,9 +286,14 @@ public class EmployeeManagement {
         return null;
     }
 
-    public int inputAgeWithValidation(String field){
-        int age = inputIntegerWithValidation(field);
-        return age;
+    // Stream API
+    private Employee findEmployeeById(String id) {
+        Employee emp = employees.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
+        return emp;
+    }
+
+    public String inputUsernameWithValidation(String field) {
+        return inputWithValidation(field, this::isValidUsername);
     }
 
     public boolean isValidUsername(String username) {
@@ -295,21 +306,6 @@ public class EmployeeManagement {
             }
         }
         return true;
-    }
-
-    public String inputUsernameWithValidation(String field){
-        String username = inputWithValidation(field, this::isValidUsername);
-        return username;
-    }
-    // Stream API
-    private Employee findEmployeeById(String id) {
-        return employees.stream().filter(employee -> employee.getId().equals(id)).findFirst().orElse(null);
-    }
-
-    public boolean performAnotherAct(String content) {
-        System.out.print(content);
-        String choice = scanner.nextLine();
-        return choice.equalsIgnoreCase("yes");
     }
 
     public void displayEmployeeInformation() {
